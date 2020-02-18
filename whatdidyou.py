@@ -1,5 +1,10 @@
 import re
 import os
+from random import seed
+from random import randint
+# seed random number generator
+seed(1)
+# generate some integers
 
 
 def makePing(hostname):
@@ -49,8 +54,15 @@ while entrada != 'z' and entrada != 'Z':
 
     elif ddPatron.match(entrada) is not None:    
         if entrada in ddHist or entrada == 'dd':
-            print('Comando dd ejecutado exitosamente')    
-            #Codigo del comando   
+            if (randint(0,99) % 2) == 0:
+                f = open('goose1.txt' , 'r')
+                print(f.read())
+                f.close()
+            else:
+                f = open('goose2.txt' , 'r')
+                print(f.read())
+                f.close()
+                
         else:
             #si es si codigo del comando
             temp = input('quisiste decir dd ? S/N ')
@@ -59,12 +71,23 @@ while entrada != 'z' and entrada != 'Z':
                 f.write(' '+entrada)
                 f.close()
                 ddHist.append(entrada)
+                if (randint(0,99) % 2) == 0:
+                    f = open('goose1.txt' , 'r')
+                    print(f.read())
+                    f.close()
+                else:
+                    f = open('goose2.txt' , 'r')
+                    print(f.read())
+                    f.close()
 
 
     elif lsPatron.match(entrada) is not None:    
         if entrada in lsHist or entrada == 'ls':
-            print('Comando ls ejecutado exitosamente')    
-            #Codigo del comando   
+            #Codigo del comando  
+            # 
+            files = os.listdir('.')
+            for name in files:
+                print(name) 
         else:
             #si es si codigo del comando
             temp = input('quisiste decir ls ? S/N ')
@@ -73,6 +96,9 @@ while entrada != 'z' and entrada != 'Z':
                 f.write(' '+entrada)
                 f.close()
                 lsHist.append(entrada)
+                files = os.listdir('.')
+                for name in files:
+                    print(name) 
 
     else:
         print('No se reconoce el comando')    
