@@ -1,5 +1,10 @@
 import re
+import os
 
+
+def makePing(hostname):
+    #Codigo del comando
+    response = os.system("ping " + hostname)
 
 fping  = open('ping.txt', 'r')
 fls = open('ls.txt', 'r')
@@ -14,36 +19,36 @@ fls.close()
 fdd.close()
 
 
-print(pingHist)
-
 pingPatron= re.compile('[op]+[uio]*[bnm]*[fgh]*')
-
 lsPatron = re.compile('[kl]+[asd]*')
 ddPatron = re.compile('[sdf]+')
 
-ipPatron = re.compile('^(?:(?:25[0-5]|2[0-4][0-9]|'
-          '[01]?[0-9][0-9]?)\.){3}'
-          '(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$')
 
 entrada = ''
 while entrada != 'z' and entrada != 'Z':
     entrada = input(">>")
-
-    if pingPatron.match(entrada) is not None:
-        if entrada in pingHist:
-            print('Comando ping ejecutado exitosamente')    
-            #Codigo del comando   
+    args = re.split('\s' ,entrada)
+    if pingPatron.match(args[0]) is not None:
+        if args[0] in pingHist or args[0] == 'ping':
+            if len(args)>=2:
+                makePing(args[1]) 
+            else:
+                makePing("google.com")              
         else:
             #si es si codigo del comando
             temp = input('quisiste decir ping ? S/N ')
             if temp == 'S' or temp == 's':
                 f = open('ping.txt' , 'a')
-                f.write(' '+entrada)
+                f.write(' '+args[0])
                 f.close()
-                pingHist.append(entrada)
+                pingHist.append(args[0])
+                if len(args)>=2:
+                    makePing(args[1]) 
+                else:
+                    makePing("google.com")
 
     elif ddPatron.match(entrada) is not None:    
-        if entrada in ddHist:
+        if entrada in ddHist or entrada == 'dd':
             print('Comando dd ejecutado exitosamente')    
             #Codigo del comando   
         else:
@@ -57,7 +62,7 @@ while entrada != 'z' and entrada != 'Z':
 
 
     elif lsPatron.match(entrada) is not None:    
-        if entrada in lsHist:
+        if entrada in lsHist or entrada == 'ls':
             print('Comando ls ejecutado exitosamente')    
             #Codigo del comando   
         else:
