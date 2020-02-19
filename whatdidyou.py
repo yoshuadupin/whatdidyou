@@ -25,7 +25,7 @@ fdd.close()
 
 
 pingPatron= re.compile('[op]+[uio]*[bnm]*[fgh]*')
-lsPatron = re.compile('[kl]+[asd]*')
+lsPatron = re.compile('[kl]+[asd]*|[asd]+[kl]*')
 ddPatron = re.compile('[sdf]+')
 
 
@@ -51,26 +51,8 @@ while entrada != 'z' and entrada != 'Z':
                     makePing(args[1]) 
                 else:
                     makePing("google.com")
-
-    elif ddPatron.match(entrada) is not None:    
-        if entrada in ddHist or entrada == 'dd':
-            f = open('goose'+(str(randint(0,99)%3))+'.txt' , 'r')
-            print(f.read())
-            f.close()    
-        else:
-            #si es si codigo del comando
-            temp = input('quisiste decir dd ? S/N ')
-            if temp == 'S' or temp == 's':
-                f = open('dd.txt' , 'a')
-                f.write(' '+entrada)
-                f.close()
-                ddHist.append(entrada)
-                f = open('goose'+(str(randint(0,99)%3))+'.txt' , 'r')
-                print(f.read())
-                f.close()
-
-
-    elif lsPatron.match(entrada) is not None:    
+                    
+    if lsPatron.match(entrada) is not None:    
         if entrada in lsHist or entrada == 'ls':
             #Codigo del comando  
             # 
@@ -88,6 +70,25 @@ while entrada != 'z' and entrada != 'Z':
                 files = os.listdir('.')
                 for name in files:
                     print(name) 
+
+    if ddPatron.match(entrada) is not None:    
+        if entrada in ddHist or entrada == 'dd':
+            f = open('goose'+(str(randint(0,99)%3))+'.txt' , 'r')
+            print(f.read())
+            f.close()    
+        else:
+            #si es si codigo del comando
+            temp = input('quisiste decir dd ? S/N ')
+            if temp == 'S' or temp == 's':
+                f = open('dd.txt' , 'a')
+                f.write(' '+entrada)
+                f.close()
+                ddHist.append(entrada)
+                f = open('goose'+(str(randint(0,99)%3))+'.txt' , 'r')
+                print(f.read())
+                f.close()
+
+
 
     else:
         print('No se reconoce el comando')    
