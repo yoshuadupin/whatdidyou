@@ -54,15 +54,9 @@ while entrada != 'z' and entrada != 'Z':
 
     elif ddPatron.match(entrada) is not None:    
         if entrada in ddHist or entrada == 'dd':
-            if (randint(0,99) % 2) == 0:
-                f = open('goose1.txt' , 'r')
-                print(f.read())
-                f.close()
-            else:
-                f = open('goose2.txt' , 'r')
-                print(f.read())
-                f.close()
-                
+            f = open('goose'+(str(randint(0,99)%3))+'.txt' , 'r')
+            print(f.read())
+            f.close()    
         else:
             #si es si codigo del comando
             temp = input('quisiste decir dd ? S/N ')
@@ -71,14 +65,9 @@ while entrada != 'z' and entrada != 'Z':
                 f.write(' '+entrada)
                 f.close()
                 ddHist.append(entrada)
-                if (randint(0,99) % 2) == 0:
-                    f = open('goose1.txt' , 'r')
-                    print(f.read())
-                    f.close()
-                else:
-                    f = open('goose2.txt' , 'r')
-                    print(f.read())
-                    f.close()
+                f = open('goose'+(str(randint(0,99)%3))+'.txt' , 'r')
+                print(f.read())
+                f.close()
 
 
     elif lsPatron.match(entrada) is not None:    
