@@ -13,20 +13,20 @@ def makePing(hostname):
 
 fping  = open('ping.txt', 'r')
 fls = open('ls.txt', 'r')
-fdd = open('dd.txt', 'r')
+fvi = open('vi.txt', 'r')
 pingHist = re.split('\s' , fping.read()  )
 lsHist = re.split('\s' , fls.read()  )
-ddHist = re.split('\s' , fdd.read()  )
+viHist = re.split('\s' , fvi.read()  )
 
 
 fping.close()
 fls.close()
-fdd.close()
+fvi.close()
 
 
 pingPatron= re.compile('[op]+[uio]*[bnm]*[fgh]*')
 lsPatron = re.compile('[kl]+[asd]*|[asd]+[kl]*')
-ddPatron = re.compile('[sdf]+')
+viPatron = re.compile('[cvb]+[uio]*')
 
 
 entrada = ''
@@ -38,7 +38,8 @@ while entrada != 'z' and entrada != 'Z':
             if len(args)>=2:
                 makePing(args[1]) 
             else:
-                makePing("google.com")              
+                makePing("google.com")   
+            continue
         else:
             #si es si codigo del comando
             temp = input('quisiste decir ping ? S/N ')
@@ -51,6 +52,7 @@ while entrada != 'z' and entrada != 'Z':
                     makePing(args[1]) 
                 else:
                     makePing("google.com")
+                continue
                     
     if lsPatron.match(entrada) is not None:    
         if entrada in lsHist or entrada == 'ls':
@@ -59,6 +61,7 @@ while entrada != 'z' and entrada != 'Z':
             files = os.listdir('.')
             for name in files:
                 print(name) 
+            continue
         else:
             #si es si codigo del comando
             temp = input('quisiste decir ls ? S/N ')
@@ -70,23 +73,25 @@ while entrada != 'z' and entrada != 'Z':
                 files = os.listdir('.')
                 for name in files:
                     print(name) 
-
-    if ddPatron.match(entrada) is not None:    
-        if entrada in ddHist or entrada == 'dd':
+                continue
+    if viPatron.match(entrada) is not None:    
+        if entrada in viHist or entrada == 'vi':
             f = open('goose'+(str(randint(0,99)%3))+'.txt' , 'r')
             print(f.read())
-            f.close()    
+            f.close() 
+            continue   
         else:
             #si es si codigo del comando
-            temp = input('quisiste decir dd ? S/N ')
+            temp = input('quisiste decir vi ? S/N ')
             if temp == 'S' or temp == 's':
-                f = open('dd.txt' , 'a')
+                f = open('vi.txt' , 'a')
                 f.write(' '+entrada)
                 f.close()
-                ddHist.append(entrada)
+                viHist.append(entrada)
                 f = open('goose'+(str(randint(0,99)%3))+'.txt' , 'r')
                 print(f.read())
                 f.close()
+                continue
 
 
 
